@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLDukkanStudio – Etsy yetki kodu</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #222; }
+  textarea { width: 100%; font-family: monospace; font-size: 14px; }
+  button { margin-top: 8px; padding: 8px 14px; }
+  .err { color: #b00020; }
+</style>
+</head>
+<body>
+<h2>Etsy yetkilendirme kodu</h2>
+<p>Bu sayfa hiçbir bilgiyi sunucuya göndermez. Aşağıdaki değerleri kopyalayıp BLDukkanStudio panelindeki alana yapıştırın.</p>
+<div id="content"></div>
+<script>
+  // Etsy, yetki sonrası bu sayfayı ?code=...&state=... parametreleriyle açar.
+  // Değerler yalnızca bu tarayıcıda gösterilir; ağ isteği yapılmaz.
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("code");
+  var state = params.get("state");
+  var error = params.get("error_description") || params.get("error");
+  var root = document.getElementById("content");
+
+  function box(label, value) {
+    var wrap = document.createElement("div");
+    var lab = document.createElement("p");
+    lab.textContent = label;
+    var ta = document.createElement("textarea");
+    ta.rows = 2;
+    ta.readOnly = true;
+    ta.value = value;
+    var btn = document.createElement("button");
+    btn.textContent = "Kopyala";
+    btn.onclick = function () { ta.select(); navigator.clipboard.writeText(value); btn.textContent = "Kopyalandı"; };
+    wrap.appendChild(lab); wrap.appendChild(ta); wrap.appendChild(btn);
+    root.appendChild(wrap);
+  }
+
+  if (error) {
+    var p = document.createElement("p");
+    p.className = "err";
+    p.textContent = "Etsy yetkiyi reddetti veya bir hata oluştu: " + error;
+    root.appendChild(p);
+  } else if (code && state) {
+    box("Kod (code):", code);
+    box("State:", state);
+  } else {
+    var p2 = document.createElement("p");
+    p2.textContent = "Bu sayfa Etsy yetkilendirmesinden sonra açılmalıdır. Panelden 'Etsy ile bağlan' ile başlayın.";
+    root.appendChild(p2);
+  }
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a56f69594a4a9f96',t:'MTc5NDA4NjczNg=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a56f69594a4a9f96',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
